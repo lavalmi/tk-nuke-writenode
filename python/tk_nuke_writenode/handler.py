@@ -1620,7 +1620,7 @@ class TankWriteNodeHandler(object):
                 # as a new file or as the same file in the onScriptSave callback
                 last_known_script_knob = node.knob("tk_last_known_script")
                 if force_reset or not last_known_script_knob.value():
-                    last_known_script_knob.setValue(script_path)
+                    last_known_script_knob.setValue(script_path.replace('\\', '/'))
 
             # Note that this method can get called to update the proxy render path when the node
             # isn't in proxy mode!  Because we only want to update the UI to represent the 'actual'

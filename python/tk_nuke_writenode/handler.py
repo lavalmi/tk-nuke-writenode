@@ -1506,7 +1506,18 @@ class TankWriteNodeHandler(object):
                 cache_item = self.__node_computed_path_settings_cache.get(
                     (node, is_proxy), (None, "", "")
                 )
-                old_cache_entry, compute_path_error, render_path = cache_item
+                old_cache_entry, compute_path_error, _ = cache_item
+
+                # FIX: force compute the render path and overwrite cache
+                render_path = self.__compute_render_path_from(
+                    node, render_template, width, height, output_name
+                )
+                self.__node_computed_path_settings_cache[(node, is_proxy)] = (
+                    old_cache_entry,
+                    compute_path_error,
+                    render_path,
+                )
+
                 cache_entry = {
                     "ctx": self._app.context,
                     "width": width,
